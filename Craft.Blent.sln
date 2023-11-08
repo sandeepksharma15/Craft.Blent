@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34302.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Craft.Blent.ServerDemo", "Demos\Craft.Blent.ServerDemo\Craft.Blent.ServerDemo.csproj", "{7692CC38-E118-4D70-82A5-3CF25EEA5B2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Craft.Blent.WasmDemo", "Demos\Craft.Blent.WasmDemo\Craft.Blent.WasmDemo\Craft.Blent.WasmDemo.csproj", "{854C9814-BA2D-4B3F-B9A5-126F48EBF37A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Craft.Blent.WasmDemo.Client", "Demos\Craft.Blent.WasmDemo\Craft.Blent.WasmDemo.Client\Craft.Blent.WasmDemo.Client.csproj", "{213192A6-426A-4BCD-895E-53611201EC1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6ECCCC0D-4CCE-43D5-834C-638A4741E2CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{7258C6BB-EE19-4239-9A8F-57D50A388524}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Craft.Blent.Tests", "Tests\Craft.Blent.Tests.csproj", "{02B05E6B-9646-4E74-B28D-B18ABEED8C1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Craft.Blent", "Source\Craft.Blent.csproj", "{E79B2BB0-0A37-4FB3-B371-40A95CEEEA86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7692CC38-E118-4D70-82A5-3CF25EEA5B2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7692CC38-E118-4D70-82A5-3CF25EEA5B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7692CC38-E118-4D70-82A5-3CF25EEA5B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7692CC38-E118-4D70-82A5-3CF25EEA5B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854C9814-BA2D-4B3F-B9A5-126F48EBF37A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854C9814-BA2D-4B3F-B9A5-126F48EBF37A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854C9814-BA2D-4B3F-B9A5-126F48EBF37A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854C9814-BA2D-4B3F-B9A5-126F48EBF37A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213192A6-426A-4BCD-895E-53611201EC1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213192A6-426A-4BCD-895E-53611201EC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213192A6-426A-4BCD-895E-53611201EC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213192A6-426A-4BCD-895E-53611201EC1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B05E6B-9646-4E74-B28D-B18ABEED8C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B05E6B-9646-4E74-B28D-B18ABEED8C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B05E6B-9646-4E74-B28D-B18ABEED8C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B05E6B-9646-4E74-B28D-B18ABEED8C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E79B2BB0-0A37-4FB3-B371-40A95CEEEA86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E79B2BB0-0A37-4FB3-B371-40A95CEEEA86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E79B2BB0-0A37-4FB3-B371-40A95CEEEA86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79B2BB0-0A37-4FB3-B371-40A95CEEEA86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7692CC38-E118-4D70-82A5-3CF25EEA5B2F} = {7258C6BB-EE19-4239-9A8F-57D50A388524}
+		{854C9814-BA2D-4B3F-B9A5-126F48EBF37A} = {7258C6BB-EE19-4239-9A8F-57D50A388524}
+		{213192A6-426A-4BCD-895E-53611201EC1C} = {7258C6BB-EE19-4239-9A8F-57D50A388524}
+		{02B05E6B-9646-4E74-B28D-B18ABEED8C1D} = {6ECCCC0D-4CCE-43D5-834C-638A4741E2CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A859CCE-82A1-4E88-A677-FFE32DE89480}
+	EndGlobalSection
+EndGlobal

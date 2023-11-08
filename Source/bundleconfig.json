@@ -1,7 +1,8 @@
 [
   {
-    "outputFileName": "wwwroot/js/CbWindows.min.js",
+    "outputFileName": "wwwroot/js/craftblent.min.js",
     "inputFiles": [
+      "Scripts/MouseEvents.js",
       "Scripts/CbWindows.js"
     ]
   }

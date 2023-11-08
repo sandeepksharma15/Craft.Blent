@@ -2,7 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
 		<Authors>Sandeep SHARMA</Authors>
@@ -15,6 +14,7 @@
 		<PackageVersion>0.1.0</PackageVersion>
 		<RepositoryUrl>https://github.com/sandeepksharma15/Craft.Blent</RepositoryUrl>
 		<PackageTags>Blazor, Material, Bootstrap, Components, Blazor Components, Blazor Library</PackageTags>
+		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -40,6 +40,10 @@
 	<ItemGroup>
 		<Watch Include="**\*.scss" />
 		<Watch Include="**\*.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Watch Remove="Scripts\MouseEvents.js" />
 	</ItemGroup>
 
 </Project>

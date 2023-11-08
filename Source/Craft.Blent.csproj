@@ -15,6 +15,7 @@
 		<RepositoryUrl>https://github.com/sandeepksharma15/Craft.Blent</RepositoryUrl>
 		<PackageTags>Blazor, Material, Bootstrap, Components, Blazor Components, Blazor Library</PackageTags>
 		<OutputType>Library</OutputType>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -33,17 +34,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="bundleconfig.json" />
-		<None Include="compilerconfig.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Watch Include="**\*.scss" />
 		<Watch Include="**\*.js" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Watch Remove="Scripts\MouseEvents.js" />
-	</ItemGroup>
+	<!--<ItemGroup>
+		<_NewCompiledCssFiles Include="wwwroot\css\craftblent.min.css" Exclude="@(Content)" />
+		<_NewCompiledJsFiles Include="wwwroot\js\craftblent.min.js" Exclude="@(Content)" />
+		<Content Include="@(_NewCompiledCssFiles)" />
+		<Content Include="@(_NewCompiledJsFiles)" />	
+	</ItemGroup>-->
 
 </Project>

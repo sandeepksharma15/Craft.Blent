@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Xml;
 using Craft.Blent.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -114,13 +113,13 @@ public class BaseBlentComponent : ComponentBase, IDisposable
             if (Visible)
             {
                 if (ContextMenu.HasDelegate)
-                    await JsRuntime.InvokeVoidAsync("Radzen.addContextMenu", GetId(), Reference);
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.addContextMenu", GetId(), Reference);
 
                 if (MouseEnter.HasDelegate)
-                    await JsRuntime.InvokeVoidAsync("Radzen.addMouseEnter", GetId(), Reference);
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.addMouseEnter", GetId(), Reference);
 
                 if (MouseLeave.HasDelegate)
-                    await JsRuntime.InvokeVoidAsync("Radzen.addMouseLeave", GetId(), Reference);
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.addMouseLeave", GetId(), Reference);
             }
         }
     }
@@ -202,13 +201,13 @@ public class BaseBlentComponent : ComponentBase, IDisposable
         if (IsJsRuntimeAvailable)
         {
             if (ContextMenu.HasDelegate)
-                _ = JsRuntime.InvokeVoidAsync("Radzen.removeContextMenu", Id);
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", Id));
 
             if (MouseEnter.HasDelegate)
-                _ = JsRuntime.InvokeVoidAsync("Radzen.removeMouseEnter", Id);
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", Id));
 
             if (MouseLeave.HasDelegate)
-                _ = JsRuntime.InvokeVoidAsync("Radzen.removeMouseLeave", Id);
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", Id));
         }
     }
 }

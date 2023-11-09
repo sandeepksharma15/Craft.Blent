@@ -20,4 +20,5 @@ public abstract class BlentComponent : BaseBlentComponent
 
     private IFluidGap gap;
     private IFluidDisplay display;
+    private IFluidBorder border;
 }

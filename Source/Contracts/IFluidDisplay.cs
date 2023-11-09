@@ -1,7 +1,4 @@
-﻿using Craft.Blent.Enums;
-using Craft.Blent.Utilities;
-
-namespace Craft.Blent.Contracts;
+﻿namespace Craft.Blent.Contracts;
 
 public interface IFluidDisplay
 {

@@ -3,6 +3,7 @@
 public interface IClassProvider :
     IBorderClasses,
     IDisplayClasses,
+    IFlexClasses,
     IGapClasses,
     ISizingClasses,
     ISpacingClasses,

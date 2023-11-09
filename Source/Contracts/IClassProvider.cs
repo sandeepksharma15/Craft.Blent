@@ -5,6 +5,8 @@ public interface IClassProvider :
     IDisplayClasses,
     IFlexClasses,
     IGapClasses,
+    IOverflowClasses,
+    IPositionClasses,
     ISizingClasses,
     ISpacingClasses,
     ITextEditClasses

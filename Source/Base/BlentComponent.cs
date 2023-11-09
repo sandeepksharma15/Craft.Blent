@@ -1,5 +1,6 @@
 ﻿using Craft.Blent.Contracts;
 using Craft.Blent.Enums;
+using Craft.Blent.Fluid;
 
 namespace Craft.Blent.Base;
 
@@ -21,4 +22,7 @@ public abstract class BlentComponent : BaseBlentComponent
     private IFluidGap gap;
     private IFluidDisplay display;
     private IFluidBorder border;
+    private IFluidFlex flex;
+    private IFluidPosition position;
+    private IFluidOverflow overflow;
 }

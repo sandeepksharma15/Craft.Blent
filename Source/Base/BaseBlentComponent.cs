@@ -6,7 +6,7 @@ using Microsoft.JSInterop;
 
 namespace Craft.Blent.Base;
 
-public class BaseBlentComponent : ComponentBase, IDisposable
+public abstract class BaseBlentComponent : ComponentBase, IDisposable
 {
     private CultureInfo _culture;
     private readonly Debouncer _debouncer = new();

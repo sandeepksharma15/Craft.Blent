@@ -23,7 +23,7 @@ public class BaseBlentComponentTests : TestContext
     {
         // Arrange
         const string expectedId = "testId";
-        var _sut = new BaseBlentComponent { Id = expectedId };
+        var _sut = new TestComponent { Id = expectedId };
 
         // Act
         var result = _sut.GetId();
@@ -41,7 +41,7 @@ public class BaseBlentComponentTests : TestContext
             {
                 { "id", expectedId }
             };
-        var _sut = new BaseBlentComponent { UserAttributes = userAttributes };
+        var _sut = new TestComponent { UserAttributes = userAttributes };
 
         // Act
         var result = _sut.GetId();
@@ -59,7 +59,7 @@ public class BaseBlentComponentTests : TestContext
             {
                 { "id", string.Empty }
             };
-        var _sut = new BaseBlentComponent { UserAttributes = userAttributes, Id = expectedId };
+        var _sut = new TestComponent { UserAttributes = userAttributes, Id = expectedId };
 
         // Act
         var result = _sut.GetId();
@@ -114,3 +114,5 @@ public class BaseBlentComponentTests : TestContext
         _sut.Visible.Should().BeFalse();
     }
 }
+
+public class TestComponent : BaseBlentComponent { }

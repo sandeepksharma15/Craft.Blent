@@ -1,6 +1,5 @@
 ﻿using Craft.Blent.Contracts;
 using Craft.Blent.Enums;
-using Craft.Blent.Fluid;
 
 namespace Craft.Blent.Base;
 
@@ -25,4 +24,20 @@ public abstract class BlentComponent : BaseBlentComponent
     private IFluidFlex flex;
     private IFluidPosition position;
     private IFluidOverflow overflow;
+
+    private CharacterCasing characterCasing = CharacterCasing.Normal;
+
+    private TextColor textColor = TextColor.Default;
+    private TextAlignment textAlignment = TextAlignment.Default;
+    private TextTransform textTransform = TextTransform.Default;
+    private TextWeight textWeight = TextWeight.Default;
+    private TextOverflow textOverflow = TextOverflow.Default;
+    private TextSize textSize = TextSize.Default;
+
+    private VerticalAlignment verticalAlignment = VerticalAlignment.Default;
+
+    private Background background = Background.Default;
+
+    private Shadow shadow = Shadow.None;
+
 }

@@ -7,7 +7,7 @@ using Microsoft.JSInterop;
 
 namespace Craft.Blent.Base;
 
-public abstract class BaseBlentComponent : ComponentBase, IDisposable
+public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDisposable
 {
     private CultureInfo _culture;
     private readonly Debouncer _debouncer = new();
@@ -217,26 +217,23 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
         }
     }
 
-    protected virtual async ValueTask DisposeAsync(bool disposing)
+    public virtual async ValueTask DisposeAsync()
     {
         disposed = true;
 
-        if (disposing)
+        _reference?.Dispose();
+        _reference = null;
+
+        if (IsJsRuntimeAvailable)
         {
-            _reference?.Dispose();
-            _reference = null;
+            if (ContextMenu.HasDelegate)
+                await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId);
 
-            if (IsJsRuntimeAvailable)
-            {
-                if (ContextMenu.HasDelegate)
-                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId);
+            if (MouseEnter.HasDelegate)
+                await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId);
 
-                if (MouseEnter.HasDelegate)
-                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId);
-
-                if (MouseLeave.HasDelegate)
-                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId);
-            }
+            if (MouseLeave.HasDelegate)
+                await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId);
         }
     }
 }

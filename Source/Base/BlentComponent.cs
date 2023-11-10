@@ -93,25 +93,6 @@ public abstract class BlentComponent : BaseBlentComponent
         return base.SetParametersAsync(parameters);
     }
 
-    public override void Dispose()
-    {
-        ClassBuilder = null;
-        StyleBuilder = null;
-
-        base.Dispose();
-    }
-
-    protected override ValueTask DisposeAsync(bool disposing)
-    {
-        if (disposing)
-        {
-            ClassBuilder = null;
-            StyleBuilder = null;
-        }
-
-        return base.DisposeAsync(disposing);
-    }
-
     protected virtual void BuildStyles(StyleBuilder builder)
     {
         if (Style != null)

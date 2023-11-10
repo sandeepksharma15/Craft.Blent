@@ -2,5 +2,5 @@
 
 public interface IUniqueIdProvider
 {
-    string Generate { get; }
+    string Generate();
 }

@@ -28,13 +28,10 @@ public sealed class UniqueIdProvider : IUniqueIdProvider
         buffer[11] = Encode32Chars[(int)(id >> 5) & 31];
     }
 
-    public string Generate
+    public string Generate()
     {
-        get
-        {
-            var id = Interlocked.Increment(ref _lastId);
+        var id = Interlocked.Increment(ref _lastId);
 
-            return string.Create(_length, id, _generatelDelegate);
-        }
+        return string.Create(_length, id, _generatelDelegate);
     }
 }

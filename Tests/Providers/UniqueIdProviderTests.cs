@@ -12,7 +12,7 @@ public class UniqueIdProviderTests
         var idProvider = new UniqueIdProvider();
 
         // Act
-        var generatedId = idProvider.Generate;
+        var generatedId = idProvider.Generate();
 
         // Assert
         generatedId.Should().NotBeNullOrEmpty();
@@ -25,8 +25,8 @@ public class UniqueIdProviderTests
         var idProvider = new UniqueIdProvider();
 
         // Act
-        var id1 = idProvider.Generate;
-        var id2 = idProvider.Generate;
+        var id1 = idProvider.Generate();
+        var id2 = idProvider.Generate();
 
         // Assert
         id1.Should().NotBeEquivalentTo(id2);
@@ -39,7 +39,7 @@ public class UniqueIdProviderTests
         var idProvider = new UniqueIdProvider();
 
         // Act
-        var generatedId = idProvider.Generate;
+        var generatedId = idProvider.Generate();
 
         // Assert
         generatedId.Length.Should().Be(13);
@@ -53,7 +53,7 @@ public class UniqueIdProviderTests
         const string source = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
 
         // Act
-        var generatedId = idProvider.Generate;
+        var generatedId = idProvider.Generate();
         var result = generatedId.ToCharArray().All(c => source.Contains(c));
 
         // Assert

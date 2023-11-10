@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Craft.Blent.Utilities;
+namespace Craft.Blent.Extensions;
 
 public static class ParameterViewExtensions
 {

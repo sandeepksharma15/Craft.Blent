@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Craft.Blent.Contracts;
 using Craft.Blent.Contracts.Providers;
+using Craft.Blent.Extensions;
 using Craft.Blent.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,7 +10,7 @@ using Microsoft.JSInterop;
 
 namespace Craft.Blent.Base;
 
-public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDisposable, IStateHasChanged
+public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHasChanged
 {
     private CultureInfo _culture;
     private readonly Debouncer _debouncer = new();
@@ -19,6 +20,11 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
     private ILogger? _logger;
 
     protected ILogger Logger => _logger ??= LoggerFactory.CreateLogger(GetType());
+
+    /// <summary>
+    /// Gets or sets a value indicating whether <see cref="JSRuntime" /> is available.
+    /// </summary>
+    protected bool IsJsRuntimeAvailable { get; set; }
 
     internal bool disposed = false;
 
@@ -82,7 +88,7 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
 
     protected override void OnInitialized()
     {
-        ElementId ??= IdGenerator.Generate;
+        ElementId ??= IdGenerator.Generate();
 
         base.OnInitialized();
     }
@@ -104,11 +110,6 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
             return _reference;
         }
     }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether <see cref="JSRuntime" /> is available.
-    /// </summary>
-    protected bool IsJsRuntimeAvailable { get; set; }
 
     /// <summary>
     /// Debounces the specified action.
@@ -215,33 +216,13 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
         if (IsJsRuntimeAvailable)
         {
             if (ContextMenu.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId));
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", GetId()));
 
             if (MouseEnter.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId));
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", GetId()));
 
             if (MouseLeave.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId));
-        }
-    }
-
-    public virtual async ValueTask DisposeAsync()
-    {
-        disposed = true;
-
-        _reference?.Dispose();
-        _reference = null;
-
-        if (IsJsRuntimeAvailable)
-        {
-            if (ContextMenu.HasDelegate)
-                await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId);
-
-            if (MouseEnter.HasDelegate)
-                await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId);
-
-            if (MouseLeave.HasDelegate)
-                await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId);
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", GetId()));
         }
     }
 

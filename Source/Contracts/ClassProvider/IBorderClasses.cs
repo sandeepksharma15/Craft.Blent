@@ -1,6 +1,6 @@
 ﻿using Craft.Blent.Enums;
 
-namespace Craft.Blent.Contracts;
+namespace Craft.Blent.Contracts.ClassProvider;
 
 public interface IBorderClasses
 {

@@ -1,4 +1,5 @@
-﻿using Craft.Blent.Contracts;
+﻿using Craft.Blent.Contracts.ClassProvider;
+using Craft.Blent.Contracts.Fluid;
 using Craft.Blent.Enums;
 
 namespace Craft.Blent.Fluid;

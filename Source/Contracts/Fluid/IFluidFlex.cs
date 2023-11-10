@@ -1,7 +1,8 @@
-﻿using Craft.Blent.Enums;
+﻿using Craft.Blent.Contracts.ClassProvider;
+using Craft.Blent.Enums;
 using Craft.Blent.Utilities;
 
-namespace Craft.Blent.Contracts;
+namespace Craft.Blent.Contracts.Fluid;
 
 public interface IFluidFlex
 {

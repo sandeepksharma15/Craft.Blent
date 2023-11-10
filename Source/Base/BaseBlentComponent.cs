@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Craft.Blent.Contracts.Providers;
 using Craft.Blent.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -14,9 +15,12 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
     private bool _firstRender = true;
     private DotNetObjectReference<BaseBlentComponent> _reference;
 
+    protected virtual bool ShouldAutoGenerateId => false;
+
     internal bool disposed = false;
 
     [Inject] protected IJSRuntime JsRuntime { get; set; }
+    [Inject] protected IUniqueIdProvider IdGenerator { get; set; }
 
     [CascadingParameter(Name = nameof(DefaultCulture))]
     public CultureInfo DefaultCulture { get; set; }
@@ -25,7 +29,7 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
     /// Specifies the additional attributes that should be applied to the element
     /// </summary>
     [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object> UserAttributes { get; set; }
+    public Dictionary<string, object> UserAttributes { get; set; }
 
     /// <summary>
     /// A callback that is invoked when the user hovers the component
@@ -48,6 +52,11 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
     [Parameter] public virtual bool Visible { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets the unique id of the element.
+    /// </summary>
+    [Parameter] public string ElementId { get; set; }
+
+    /// <summary>
     /// Gets or sets the culture used by this component. Defaults to <see cref="CultureInfo.CurrentCulture"/>.
     /// </summary>
     [Parameter]
@@ -60,13 +69,14 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
     /// <summary>
     /// Gets a reference to the HTML element rendered for the component
     /// </summary>
-    public ElementReference Element { get; protected internal set; }
-
-    public string Id { get; set; }
+    public ElementReference ElementRef { get; protected internal set; }
 
     protected override void OnInitialized()
     {
-        Id = Guid.NewGuid().ToString("N")[..10];
+        if (ShouldAutoGenerateId && ElementId == null)
+            ElementId = IdGenerator.Generate;
+
+        base.OnInitialized();
     }
 
     protected internal string GetId()
@@ -74,7 +84,7 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
         return UserAttributes != null && UserAttributes.TryGetValue("id", out object id)
                 && !string.IsNullOrEmpty(Convert.ToString(@id))
             ? Convert.ToString(id)
-            : Id;
+            : ElementId;
     }
 
     protected DotNetObjectReference<BaseBlentComponent> Reference
@@ -155,10 +165,6 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
             await OnMouseLeave();
     }
 
-    /// <summary>
-    /// Called by the Blazor runtime when parameters are set.
-    /// </summary>
-    /// <param name="parameters">The parameters.</param>
     public override async Task SetParametersAsync(ParameterView parameters)
     {
         _visibleChanged = parameters.DidParameterChange(nameof(Visible), Visible);
@@ -173,13 +179,13 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
     /// Raises <see cref="MouseEnter" />
     /// </summary>
     public async Task OnMouseEnter()
-        => await MouseEnter.InvokeAsync(Element);
+        => await MouseEnter.InvokeAsync(ElementRef);
 
     /// <summary>
     /// Raises <see cref="MouseLeave" />
     /// </summary>
     public async Task OnMouseLeave()
-        => await MouseLeave.InvokeAsync(Element);
+        => await MouseLeave.InvokeAsync(ElementRef);
 
     /// <summary>
     /// Raises <see cref="ContextMenu" />.
@@ -201,13 +207,36 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable
         if (IsJsRuntimeAvailable)
         {
             if (ContextMenu.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", Id));
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId));
 
             if (MouseEnter.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", Id));
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId));
 
             if (MouseLeave.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", Id));
+                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId));
+        }
+    }
+
+    protected virtual async ValueTask DisposeAsync(bool disposing)
+    {
+        disposed = true;
+
+        if (disposing)
+        {
+            _reference?.Dispose();
+            _reference = null;
+
+            if (IsJsRuntimeAvailable)
+            {
+                if (ContextMenu.HasDelegate)
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId);
+
+                if (MouseEnter.HasDelegate)
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId);
+
+                if (MouseLeave.HasDelegate)
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId);
+            }
         }
     }
 }

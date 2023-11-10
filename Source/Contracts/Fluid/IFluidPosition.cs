@@ -1,4 +1,6 @@
-﻿namespace Craft.Blent.Contracts;
+﻿using Craft.Blent.Contracts.ClassProvider;
+
+namespace Craft.Blent.Contracts;
 
 public interface IFluidPosition
 {

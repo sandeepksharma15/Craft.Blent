@@ -1,4 +1,4 @@
-﻿using Craft.Blent.Contracts;
+﻿using Craft.Blent.Contracts.Fluid;
 
 namespace Craft.Blent.Fluid;
 

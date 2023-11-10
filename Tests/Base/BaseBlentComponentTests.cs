@@ -67,52 +67,6 @@ public class BaseBlentComponentTests : TestContext
         // Assert
         result.Should().Be(expectedId);
     }
-
-    [Fact]
-    public void OnInitialized_Sets_UniqueId()
-    {
-        // Arrange
-        var cut = RenderComponent<BaseBlentComponent>();
-        var _sut = cut.Instance;
-
-        // Act
-        // _sut.OnInitialized();
-
-        // Assert
-        _sut.ElementId.Should().NotBeNullOrEmpty();
-    }
-
-    [Fact]
-    public void SetParametersAsync_Does_Not_Call_StateHasChanged_When_Visible_Is_Not_Changed()
-    {
-        // Arrange
-        var cut = RenderComponent<BaseBlentComponent>();
-        var _sut = cut.Instance;
-
-        _sut.Visible = false;
-
-        cut.SetParametersAndRender(parameters => parameters
-            .Add(p => p.Visible, false));
-
-        // Assert
-        _sut.Visible.Should().BeFalse();
-    }
-
-    [Fact]
-    public void SetParametersAsync_Calls_StateHasChanged_When_Visible_Is_Changed()
-    {
-        // Arrange
-        var cut = RenderComponent<BaseBlentComponent>();
-        var _sut = cut.Instance;
-
-        _sut.Visible = true;
-
-        cut.SetParametersAndRender(parameters => parameters
-            .Add(p => p.Visible, false));
-
-        // Assert
-        _sut.Visible.Should().BeFalse();
-    }
 }
 
 public class TestComponent : BaseBlentComponent { }

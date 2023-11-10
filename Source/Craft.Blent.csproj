@@ -38,6 +38,10 @@
 		<Watch Include="**\*.js" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Themes\" />
+	</ItemGroup>
+
 	<!--<ItemGroup>
 		<_NewCompiledCssFiles Include="wwwroot\css\craftblent.min.css" Exclude="@(Content)" />
 		<_NewCompiledJsFiles Include="wwwroot\js\craftblent.min.js" Exclude="@(Content)" />

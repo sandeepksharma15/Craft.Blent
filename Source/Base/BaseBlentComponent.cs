@@ -1,26 +1,30 @@
 ﻿using System.Globalization;
+using Craft.Blent.Contracts;
 using Craft.Blent.Contracts.Providers;
 using Craft.Blent.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
 namespace Craft.Blent.Base;
 
-public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDisposable
+public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDisposable, IStateHasChanged
 {
     private CultureInfo _culture;
     private readonly Debouncer _debouncer = new();
     private bool _visibleChanged = false;
     private bool _firstRender = true;
     private DotNetObjectReference<BaseBlentComponent> _reference;
+    private ILogger? _logger;
 
-    protected virtual bool ShouldAutoGenerateId => false;
+    protected ILogger Logger => _logger ??= LoggerFactory.CreateLogger(GetType());
 
     internal bool disposed = false;
 
     [Inject] protected IJSRuntime JsRuntime { get; set; }
     [Inject] protected IUniqueIdProvider IdGenerator { get; set; }
+    [Inject] private ILoggerFactory LoggerFactory { get; set; } = null!;
 
     [CascadingParameter(Name = nameof(DefaultCulture))]
     public CultureInfo DefaultCulture { get; set; }
@@ -57,6 +61,11 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
     [Parameter] public string ElementId { get; set; }
 
     /// <summary>
+    /// Use Tag to attach any user data object to the component for your convenience.
+    /// </summary>
+    [Parameter] public object? Tag { get; set; }
+
+    /// <summary>
     /// Gets or sets the culture used by this component. Defaults to <see cref="CultureInfo.CurrentCulture"/>.
     /// </summary>
     [Parameter]
@@ -73,8 +82,7 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
 
     protected override void OnInitialized()
     {
-        if (ShouldAutoGenerateId && ElementId == null)
-            ElementId = IdGenerator.Generate;
+        ElementId ??= IdGenerator.Generate;
 
         base.OnInitialized();
     }
@@ -236,4 +244,6 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IAsyncDis
                 await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId);
         }
     }
+
+    void IStateHasChanged.StateHasChanged() => StateHasChanged();
 }

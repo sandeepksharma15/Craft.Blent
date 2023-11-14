@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>preview</LangVersion>
+		<Authors>Sandeep SHARMA</Authors>
+
+		<IsPackable>true</IsPackable>
+		<PackageId>CraftBlent</PackageId>
+		<Title>CraftBlent</Title>
+		<Description>An ambitious component library for Blazor</Description>
+		<RootNamespace>Craft.Blent</RootNamespace>
+		<PackageVersion>0.1.0</PackageVersion>
+		<RepositoryUrl>https://github.com/sandeepksharma15/Craft.Blent</RepositoryUrl>
+		<PackageTags>Blazor, Material, Bootstrap, Components, Blazor Components, Blazor Library</PackageTags>
+		<OutputType>Library</OutputType>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BuildBundlerMinifier2022" Version="2.9.9" />
+		<PackageReference Include="BuildWebCompiler2022" Version="1.14.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0-rc.2.23480.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Watch Include="**\*.scss" />
+		<Watch Include="**\*.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Enums\" />
+	  <Folder Include="Themes\" />
+	</ItemGroup>
+
+	<!--<ItemGroup>
+		<_NewCompiledCssFiles Include="wwwroot\css\craftblent.min.css" Exclude="@(Content)" />
+		<_NewCompiledJsFiles Include="wwwroot\js\craftblent.min.js" Exclude="@(Content)" />
+		<Content Include="@(_NewCompiledCssFiles)" />
+		<Content Include="@(_NewCompiledJsFiles)" />	
+	</ItemGroup>-->
+
+</Project>

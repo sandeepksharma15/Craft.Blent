@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Source\Craft.Blent.csproj" />
+	  <ProjectReference Include="..\Source\Core\Craft.Blent.csproj" />
 	</ItemGroup>
 
 </Project>

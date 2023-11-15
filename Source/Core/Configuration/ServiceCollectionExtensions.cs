@@ -1,6 +1,8 @@
 ﻿using Craft.Blent.Contracts.Providers;
 using Craft.Blent.Providers;
+using Craft.Blent.Services.Browser;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Craft.Blent.Configuration;
 
@@ -50,6 +52,14 @@ public static class ServiceCollectionExtensions
 
     //    return serviceCollection;
     //}
+
+    public static IServiceCollection AddBlazorResizeListener(this IServiceCollection services, Action<ResizeOptions> options)
+    {
+        services.TryAddScoped<IBrowserViewportService, BrowserViewportService>();
+        services.Configure(options);
+
+        return services;
+    }
 
     private static IDictionary<Type, Type> LocalizationMap => new Dictionary<Type, Type>
     {

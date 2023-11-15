@@ -1,6 +1,19 @@
 ﻿var CraftBlent = [];
 
 window.CraftBlent = {
+    throttle: function (callback, delay) {
+        var timeout = null;
+        return function () {
+            var args = arguments;
+            var ctx = this;
+            if (!timeout) {
+                timeout = setTimeout(function () {
+                    callback.apply(ctx, args);
+                    timeout = null;
+                }, delay);
+            }
+        };
+    },
     addContextMenu: function (id, ref) {
         var el = document.getElementById(id);
 

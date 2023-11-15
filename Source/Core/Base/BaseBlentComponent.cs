@@ -10,7 +10,7 @@ using Microsoft.JSInterop;
 
 namespace Craft.Blent.Base;
 
-public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHasChanged
+public abstract class BaseBlentComponent : ComponentBase, IAsyncDisposable, IStateHasChanged
 {
     private CultureInfo _culture;
     private readonly Debouncer _debouncer = new();
@@ -64,7 +64,7 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHas
     /// <summary>
     /// Gets or sets the unique id of the element.
     /// </summary>
-    [Parameter] public string ElementId { get; set; }
+    public string ElementId { get; set; }
 
     /// <summary>
     /// Use Tag to attach any user data object to the component for your convenience.
@@ -88,7 +88,16 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHas
 
     protected override void OnInitialized()
     {
+        ElementId ??= GetElementId();
+
+        base.OnInitialized();
+    }
+
+    protected internal string GetElementId()
+    {
         string elementId = null;
+
+        if (ElementId != null) return ElementId;
 
         if (UserAttributes != null && UserAttributes.TryGetValue("id", out object id)
                 && !string.IsNullOrEmpty(Convert.ToString(@id)))
@@ -96,10 +105,8 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHas
 
         ElementId ??= elementId ?? IdGenerator.Generate();
 
-        base.OnInitialized();
+        return ElementId;
     }
-
-    protected internal string GetElementId() => ElementId;
 
     protected DotNetObjectReference<BaseBlentComponent> Reference
     {
@@ -139,6 +146,10 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHas
 
                 if (MouseLeave.HasDelegate)
                     await JsRuntime.InvokeVoidAsync("CraftBlent.addMouseLeave", ElementId, Reference);
+
+                // TODO: Remove this if Mouse Events don't work
+                Debounce(OnMouseEnter);
+                Debounce(OnMouseLeave);
             }
         }
     }
@@ -181,7 +192,7 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHas
         await base.SetParametersAsync(parameters);
 
         if (_visibleChanged && !_firstRender && !Visible)
-            Dispose();
+            await DisposeAsync();
     }
 
     /// <summary>
@@ -206,24 +217,37 @@ public abstract class BaseBlentComponent : ComponentBase, IDisposable, IStateHas
     /// <summary>
     /// Detaches event handlers and disposes <see cref="Reference" />.
     /// </summary>
-    public virtual void Dispose()
+    public virtual async ValueTask DisposeAsync()
     {
         disposed = true;
 
-        _reference?.Dispose();
-        _reference = null;
-
-        if (IsJsRuntimeAvailable)
+#pragma warning disable RCS1075 // Avoid empty catch clause that catches System.Exception.
+        try
         {
-            if (ContextMenu.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId));
+            if (_reference is null) return;
 
-            if (MouseEnter.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId));
+            if (IsJsRuntimeAvailable)
+            {
+                if (ContextMenu.HasDelegate)
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeContextMenu", ElementId);
 
-            if (MouseLeave.HasDelegate)
-                Task.Run(async () => await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId));
+                if (MouseEnter.HasDelegate)
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseEnter", ElementId);
+
+                if (MouseLeave.HasDelegate)
+                    await JsRuntime.InvokeVoidAsync("CraftBlent.removeMouseLeave", ElementId);
+            }
+
+            _reference?.Dispose();
+            _reference = null;
+
+            GC.SuppressFinalize(this);
         }
+        catch (Exception)
+        {
+            // https://stackoverflow.com/questions/72488563/blazor-server-side-application-throwing-system-invalidoperationexception-javas
+        }
+#pragma warning restore RCS1075 // Avoid empty catch clause that catches System.Exception.
     }
 
     void IStateHasChanged.StateHasChanged() => StateHasChanged();

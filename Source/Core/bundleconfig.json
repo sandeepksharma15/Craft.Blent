@@ -4,7 +4,7 @@
     "inputFiles": [
       "Scripts/MouseEvents.js",
       "Scripts/CbWindows.js",
-      "Scripts/ReszieListeneres5.js"
+      "Scripts/ReszieListener.js"
     ]
   }
 ]

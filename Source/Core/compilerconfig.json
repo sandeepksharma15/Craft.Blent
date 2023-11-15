@@ -2,9 +2,5 @@
   {
     "outputFile": "wwwroot/css/craftblent.css",
     "inputFile": "Styles/CraftBlent.scss"
-  },
-  {
-    "outputFile": "Scripts/ResizeListener.es5.js",
-    "inputFile": "Scripts/ResizeListener.js"
   }
 ]

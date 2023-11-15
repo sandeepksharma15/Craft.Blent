@@ -1,10 +1,14 @@
 using Craft.Blent.MaterialDemo.Components;
+using Craft.Blent.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddCraftBlent();
 
 var app = builder.Build();
 

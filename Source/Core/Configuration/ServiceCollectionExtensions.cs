@@ -19,6 +19,10 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton<BlentOptions>();
 
         serviceCollection.AddSingleton<IUniqueIdProvider, UniqueIdProvider>();
+        serviceCollection.AddBlazorResizeListener(options =>
+        {
+            options.EnableLogging = true;
+        });
 
         foreach (var mapping in LocalizationMap
                      .Concat(ValidationMap)
@@ -53,12 +57,12 @@ public static class ServiceCollectionExtensions
     //    return serviceCollection;
     //}
 
-    public static IServiceCollection AddBlazorResizeListener(this IServiceCollection services, Action<ResizeOptions> options)
+    public static IServiceCollection AddBlazorResizeListener(this IServiceCollection serviceCollection, Action<ResizeOptions> options)
     {
-        services.TryAddScoped<IBrowserViewportService, BrowserViewportService>();
-        services.Configure(options);
+        serviceCollection.TryAddScoped<IBrowserViewportService, BrowserViewportService>();
+        serviceCollection.Configure(options);
 
-        return services;
+        return serviceCollection;
     }
 
     private static IDictionary<Type, Type> LocalizationMap => new Dictionary<Type, Type>

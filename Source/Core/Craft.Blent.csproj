@@ -34,7 +34,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\js\ResizeListener.es5.js" />
+	  <Content Remove="wwwroot\js\ResizeListener.es5.min.js" />
+	  <Content Remove="wwwroot\js\ResizeListener.js" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Watch Remove="Scripts\ResizeListener.js" />
+	  <Watch Remove="wwwroot\js\ResizeListener.es5.js" />
+	  <Watch Remove="wwwroot\js\ResizeListener.es5.min.js" />
+	  <Watch Remove="wwwroot\js\ResizeListener.js" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -42,11 +51,9 @@
 	  <Folder Include="Themes\" />
 	</ItemGroup>
 
-	<!--<ItemGroup>
-		<_NewCompiledCssFiles Include="wwwroot\css\craftblent.min.css" Exclude="@(Content)" />
-		<_NewCompiledJsFiles Include="wwwroot\js\craftblent.min.js" Exclude="@(Content)" />
-		<Content Include="@(_NewCompiledCssFiles)" />
-		<Content Include="@(_NewCompiledJsFiles)" />	
-	</ItemGroup>-->
-
+	<ItemGroup>
+	  <None Include="wwwroot\js\ResizeListener.es5.js" />
+	  <None Include="wwwroot\js\ResizeListener.es5.min.js" />
+	  <None Include="wwwroot\js\ResizeListener.js" />
+	</ItemGroup>
 </Project>

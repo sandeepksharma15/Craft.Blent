@@ -51,7 +51,7 @@ internal class BrowserViewportService : IBrowserViewportService
     /// <remarks>
     /// This method is not exposed in the public API of the <see cref="IBrowserViewportService"/> interface and is intended to be used by JS and testing.
     /// </remarks>
-    [JSInvokable]
+    [JSInvokable("BrowserViewportService.RaiseOnResized")]
     public Task RaiseOnResized(BrowserWindowSize browserWindowSize,
         Breakpoint breakpoint,
         Guid javaScriptListenerId)

@@ -21,12 +21,9 @@ public abstract class BaseBlentComponent : ComponentBase, IAsyncDisposable, ISta
 
     internal protected ILogger Logger => _logger ??= LoggerFactory.CreateLogger(GetType());
 
-    /// <summary>
-    /// Gets or sets a value indicating whether <see cref="JSRuntime" /> is available.
-    /// </summary>
-    internal protected bool IsJsRuntimeAvailable { get; set; }
+    protected bool IsJsRuntimeAvailable { get; set; }
 
-    internal bool disposed = false;
+    internal bool disposed;
 
     [Inject] protected IJSRuntime JsRuntime { get; set; }
     [Inject] protected IUniqueIdProvider IdGenerator { get; set; }

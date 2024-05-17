@@ -2,22 +2,22 @@
 
 public enum Breakpoint
 {
-    ExtraSmall = 0,
+    ExtraSmall,
     Xs = ExtraSmall,
 
-    Mobile = 600,
+    Mobile,
     Sm = Mobile,
 
-    Tablet = 900,
+    Tablet,
     Md = Tablet,
 
-    Desktop = 1200,
+    Desktop,
     Lg = Desktop,
 
-    Widescreen = 1600,
+    Widescreen,
     Xl = Widescreen,
 
-    FullHD = 1920,
+    FullHD,
     Xxl = FullHD,
 
     SmAndDown,

@@ -92,17 +92,17 @@
 
     getBreakpoint(width) {
         this.logger("[Craft.Blent] Get breakpoint for width:", width);
-        if (width >= this.options.breakpointDefinitions["Xxl"])
+        if (width >= this.options.breakpointDefinitions["FullHD"])
             return 5;
-        else if (width >= this.options.breakpointDefinitions["Xl"])
+        else if (width >= this.options.breakpointDefinitions["Widescreen"])
             return 4;
-        else if (width >= this.options.breakpointDefinitions["Lg"])
+        else if (width >= this.options.breakpointDefinitions["Desktop"])
             return 3;
-        else if (width >= this.options.breakpointDefinitions["Md"])
+        else if (width >= this.options.breakpointDefinitions["Tablet"])
             return 2;
-        else if (width >= this.options.breakpointDefinitions["Sm"])
+        else if (width >= this.options.breakpointDefinitions["Mobile"])
             return 1;
-        else //Xs
+        else
             return 0;
     }
 };

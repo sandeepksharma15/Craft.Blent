@@ -7,12 +7,12 @@ internal static class GlobalBreakpointOptions
     /// </summary>
     internal static Dictionary<Breakpoint, int> DefaultBreakpointDefinitions { get; set; } = new()
     {
-        [Breakpoint.Xxl] = (int)Breakpoint.FullHD,
-        [Breakpoint.Xl] = (int)Breakpoint.Widescreen,
-        [Breakpoint.Lg] = (int)Breakpoint.Desktop,
-        [Breakpoint.Md] = (int)Breakpoint.Tablet,
-        [Breakpoint.Sm] = (int)Breakpoint.Mobile,
-        [Breakpoint.Xs] = (int)Breakpoint.ExtraSmall,
+        [Breakpoint.Xxl] = 1920,
+        [Breakpoint.Xl] = 1600,
+        [Breakpoint.Lg] = 1200,
+        [Breakpoint.Md] = 900,
+        [Breakpoint.Sm] = 600,
+        [Breakpoint.Xs] = 0,
     };
 
     /// <summary>
